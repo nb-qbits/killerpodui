@@ -15,6 +15,11 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+
+@font-face {
+  font-family: 'PerfectDark';
+  src: local('PerfectDark'), url(../fonts/pdark.ttf) format('truetype');
+}
 .tim-row {
   margin-bottom: 20px;
 }
@@ -73,6 +78,43 @@
     width: 100%;
     bottom: 10px;
   }
+}
+
+.custom-overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: #bb0a1e;
+}
+
+.custom-overlay.display{
+  opacity: 0.7 !important;
+}
+
+.custom-overlay-text {
+  color: white;
+  font-family: PerfectDark;
+  font-size: 40px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+
+
+
+.kill-stat{
+  color: #e14eca
 }
 
 .countdown-timer{

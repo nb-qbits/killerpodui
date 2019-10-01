@@ -87,17 +87,35 @@ class Player extends React.Component {
                     </CardBody>
                     <CardFooter>
                         <div className="button-container">
-                            <Button className="btn-icon btn-round" color="facebook">
-                                <i className="fab fa-facebook" />
+                            <Button className="btn-icon btn-round">
+                                <img
+                                    alt="..."
+                                    src={require("../assets/img/aim.png")}
+                                />
                             </Button>
-                            <Button className="btn-icon btn-round" color="twitter">
-                                <i className="fab fa-twitter" />
+                            <Button className="btn-icon btn-round">
+                                <img
+                                    alt="..."
+                                    src={require("../assets/img/kill.jpg")}
+                                />
                             </Button>
-                            <Button className="btn-icon btn-round" color="google">
-                                <i className="fab fa-google-plus" />
+                        </div>
+                        <div className="button-container">
+                            <Button className="btn-icon btn-round">
+                                <span className="kill-stat">{details.kill}</span>
+                            </Button>
+                            <Button className="btn-icon btn-round">
+                                <span className="kill-stat">{details.death}</span>
                             </Button>
                         </div>
                     </CardFooter>
+                    <div className={details.killedby !== '' ? 'custom-overlay display' : 'custom-overlay'}>
+                        <div className="custom-overlay-text">
+                            <p>KILLED</p>
+                            <p>BY</p>
+                            <p>{getImage(details.killedby)}</p>
+                        </div>
+                    </div>
                 </Card>
             </Col>
         );

@@ -1,8 +1,9 @@
 import React from 'react';
 
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-
-import logo from './logo.svg';
+import {
+  HashRouter as Router,
+  Route, Link
+  } from 'react-router-dom';
 import './App.css';
 import LiveScore from './components/livescore';
 import "./assets/scss/black-dashboard-react.scss";
@@ -29,13 +30,7 @@ class Welcome extends React.Component {
           <p>
             GREAT BATTLE OF KILLER PODS
           </p>
-          <a
-            className="App-link"
-            href="/dashboard"
-            rel="noopener noreferrer"
-          >
-            Start
-          </a>
+          <Link className="App-link" to={`dashboard`}>Start</Link>
         </header>
       </div>
     );

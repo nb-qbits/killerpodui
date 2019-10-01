@@ -15,7 +15,7 @@ function LiveScore() {
     const [playersData, setPlayersData] = useState({});
 
     // const baseUrl = 'https://api.te2019.aws.redhat-demo.com:6443/apis/rhte.demojam.battlefield/v1alpha1/namespaces/visual/battlefields/'
-    const baseUrl = 'http://www.mocky.io/v2/5d915ede310000520010c80a';
+    const baseUrl = 'https://5d916e4c741bd4001411625c.mockapi.io/players/1';
 
     function getData() {
         fetch(baseUrl, {
@@ -48,7 +48,7 @@ function LiveScore() {
 
     useEffect(() => {
         getData();
-        const pollForData = setInterval(() => getData(), 5000);
+        const pollForData = setInterval(() => getData(), 1500);
         return () => {
             clearTimeout(pollForData);
         };
