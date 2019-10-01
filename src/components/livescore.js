@@ -29,12 +29,11 @@ function LiveScore() {
             const dataAsJson = await fetchedData.json();
             var merged = _.merge(_.keyBy(dataAsJson['spec']['players'], 'name'), _.keyBy(dataAsJson['status']['scores'], 'name'));
             setPlayersData({'rawData': dataAsJson, 'data': _.values(merged)});
-            console.log(dataAsJson['spec']['duration'])
         });
     }
 
     // Random component
-    const Completionist = () => <span>You are good to go!</span>;
+    const Completionist = () => <span>Game Over !!!!!!</span>;
 
     // Renderer callback with condition
     const renderer = ({ hours, minutes, seconds, completed }) => {
@@ -66,7 +65,7 @@ function LiveScore() {
                 </Row>
                 {playersData['rawData'] && playersData['rawData']['spec'] &&
                     <p className="blockquote blockquote-primary countdown-timer">
-                        <Countdown renderer={renderer} date={Date.now() + playersData['rawData']['spec']['duration'] * 1000} />
+                        <Countdown renderer={renderer} date={new Date(playersData['rawData']['status']['startTime']).getTime() + playersData['rawData']['spec']['duration'] * 1000} />
                     </p>
                 }
             </div>

@@ -21,6 +21,7 @@ import React from "react";
 import {
     Button,
     Card,
+    Row,
     CardBody,
     CardFooter,
     CardText,
@@ -65,6 +66,12 @@ class Player extends React.Component {
                     // src={require("../assets/img/" + details.ready ? "ready.png" : "waiting.png")}
                     src={require(details.ready ? "../assets/img/ready.png" : "../assets/img/waiting.png")}
                 />
+                {!details.shield && <img
+                    title={'Shield'}
+                    className="shield-sign"
+                    alt="..."
+                    src={require("../assets/img/shield.png")}
+                />}
                 <Card className="card-user">
                     <CardBody>
                         <CardText />
@@ -83,10 +90,15 @@ class Player extends React.Component {
                             </a>
                         </div>
                         <div className="card-description">
-                            <Progress title={'Health'} max="100" color={getProgressBarClassName(details.maxhealth)} animated value={details.maxhealth} />
+                            <Progress title={'Health'} max="100" color={getProgressBarClassName(details.maxhealth)} animated value={details.currentHealth / details.maxhealth} />
                         </div>
                     </CardBody>
                     <CardFooter>
+                        {details.disqualified && <div>
+                            <div className="disqualified-text">
+                                <p>Disqualified</p>
+                            </div>
+                        </div>}
                         <div className="button-container">
                             <Button className="btn-icon btn-round">
                                 <img
