@@ -66,7 +66,7 @@ class Player extends React.Component {
                     // src={require("../assets/img/" + details.ready ? "ready.png" : "waiting.png")}
                     src={require(details.ready ? "../assets/img/ready.png" : "../assets/img/waiting.png")}
                 />
-                {!details.shield && <img
+                {details.shield && <img
                     title={'Shield'}
                     className="shield-sign"
                     alt="..."
