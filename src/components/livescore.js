@@ -15,14 +15,16 @@ function LiveScore() {
     const [playersData, setPlayersData] = useState({});
 
     // const baseUrl = 'https://api.te2019.aws.redhat-demo.com:6443/apis/rhte.demojam.battlefield/v1alpha1/namespaces/visual/battlefields/'
-    const baseUrl = 'https://5d916e4c741bd4001411625c.mockapi.io/players/1';
+    // const baseUrl = 'https://5d916e4c741bd4001411625c.mockapi.io/players/1';
+    const baseUrl = 'https://api.te2019.aws.redhat-demo.com:6443/apis/rhte.demojam.battlefield/v1alpha1/namespaces/visual/battlefields/demofield';
+
 
     function getData() {
         fetch(baseUrl, {
             method: 'GET',
-            // headers: new Headers({
-            //     'Authorization': 'Bearer 1lL4ojP24vlkcAR2Etigp0-loT-L1dbta0bOz9tAgfE'
-            // })
+            headers: new Headers({
+                'Authorization': 'Bearer uqzb_3-3q7kVkzCKEPqMS-ZJCScryNRCxLt27HVA_ZA'
+            })
         }).then(async (fetchedData) => {
             const dataAsJson = await fetchedData.json();
             var merged = _.merge(_.keyBy(dataAsJson['spec']['players'], 'name'), _.keyBy(dataAsJson['status']['scores'], 'name'));

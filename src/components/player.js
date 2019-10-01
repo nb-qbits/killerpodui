@@ -56,9 +56,10 @@ class Player extends React.Component {
     render() {
         const { details } = this.props;
         return (
-            <Col md="4">
+            <Col md="3">
                 <img
                     alt="..."
+                    title={details.ready ? 'Ready' : 'Not Ready'}
                     className={details.ready ? 'status-sign status-sign' : 'status-sign-waiting status-sign'}
                     
                     // src={require("../assets/img/" + details.ready ? "ready.png" : "waiting.png")}
@@ -82,19 +83,21 @@ class Player extends React.Component {
                             </a>
                         </div>
                         <div className="card-description">
-                            <Progress max="100" color={getProgressBarClassName(details.maxhealth)} animated value={details.maxhealth} />
+                            <Progress title={'Health'} max="100" color={getProgressBarClassName(details.maxhealth)} animated value={details.maxhealth} />
                         </div>
                     </CardBody>
                     <CardFooter>
                         <div className="button-container">
                             <Button className="btn-icon btn-round">
                                 <img
+                                    title={'Kills'}
                                     alt="..."
                                     src={require("../assets/img/aim.png")}
                                 />
                             </Button>
                             <Button className="btn-icon btn-round">
                                 <img
+                                    title={'Deaths'}
                                     alt="..."
                                     src={require("../assets/img/kill.jpg")}
                                 />
