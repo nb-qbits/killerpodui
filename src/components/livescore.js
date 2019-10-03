@@ -23,26 +23,27 @@ function LiveScore() {
 
 
     function getData() {
-        fetch(baseUrl, {
-            method: 'GET',
-            headers: new Headers({
-                'Authorization': 'Bearer mbLDcSbkR0uQE0Ic6QZkkVtnuuHiAgilV9SXATr6yGw'
-            })
-        }).then(async (fetchedData) => {
-            const dataAsJson = await fetchedData.json();
-            var merged = _.merge(_.keyBy(dataAsJson['spec']['players'], 'name'), _.keyBy(dataAsJson['status']['scores'], 'name'));
-            if (dataAsJson['status']['phase'] === 'done') {
-                isGameOver.current = true;
-            }
-            if (
-                !_.isEmpty(playersData) &&
-                JSON.stringify(dataAsJson['status']) !== JSON.stringify(playersData['rawData']['status']) &&
-                JSON.stringify(dataAsJson['spec']) !== JSON.stringify(playersData['rawData']['spec'])
-            ) {
-                document.getElementById('soundBar').play();
-            }
-            setPlayersData({'rawData': dataAsJson, 'data': _.values(merged)});
-        });
+        // fetch(baseUrl, {
+        //     method: 'GET',
+        //     headers: new Headers({
+        //         'Authorization': 'Bearer mbLDcSbkR0uQE0Ic6QZkkVtnuuHiAgilV9SXATr6yGw'
+        //     })
+        // }).then(async (fetchedData) => {
+        //     const dataAsJson = await fetchedData.json();
+        //     var merged = _.merge(_.keyBy(dataAsJson['spec']['players'], 'name'), _.keyBy(dataAsJson['status']['scores'], 'name'));
+        //     if (dataAsJson['status']['phase'] === 'done') {
+        //         isGameOver.current = true;
+        //     }
+        //     if (
+        //         !_.isEmpty(playersData) &&
+        //         JSON.stringify(dataAsJson['status']) !== JSON.stringify(playersData['rawData']['status']) &&
+        //         JSON.stringify(dataAsJson['spec']) !== JSON.stringify(playersData['rawData']['spec'])
+        //     ) {
+        //         document.getElementById('soundBar').play();
+        //         setPlayersData({'rawData': dataAsJson, 'data': _.values(merged)});
+        //     }
+            
+        // });
     }
 
     // Random component
@@ -62,14 +63,36 @@ function LiveScore() {
 
     useEffect(() => {
         getData();
-        timerToClearSomewhere.current = setInterval(() => getData(), 5000);
+        timerToClearSomewhere.current = setInterval(() => {
+            fetch(baseUrl, {
+                method: 'GET',
+                headers: new Headers({
+                    'Authorization': 'Bearer mbLDcSbkR0uQE0Ic6QZkkVtnuuHiAgilV9SXATr6yGw'
+                })
+            }).then(async (fetchedData) => {
+                const dataAsJson = await fetchedData.json();
+                var merged = _.merge(_.keyBy(dataAsJson['spec']['players'], 'name'), _.keyBy(dataAsJson['status']['scores'], 'name'));
+                if (dataAsJson['status']['phase'] === 'done') {
+                    isGameOver.current = true;
+                }
+                if (
+                    !_.isEmpty(playersData) &&
+                    JSON.stringify(dataAsJson['status']) !== JSON.stringify(playersData['rawData']['status']) &&
+                    JSON.stringify(dataAsJson['spec']) !== JSON.stringify(playersData['rawData']['spec'])
+                ) {
+                    document.getElementById('soundBar').play();
+                }
+                setPlayersData({'rawData': dataAsJson, 'data': _.values(merged)});
+                
+            });
+        }, 1500);
         if (isGameOver.current) {
             clearTimeout(timerToClearSomewhere.current);
         }
         return () => {
             clearTimeout(timerToClearSomewhere.current);
         };
-    }, []);
+    }, [playersData]);
 
     return (
         <div className="main-panel">
