@@ -40,12 +40,13 @@ const getImage = (name) => {
     return nameList[index];
 }
 
-const getProgressBarClassName = (value) => {
-    if (value > 0 && value < 25) {
+const getProgressBarClassName = (value, maxHealth) => {
+    const perValue = (value / maxHealth) * 100
+    if (perValue > 0 && perValue < 25) {
         return 'progress-bar-very-low';
-    } else if (value >= 25 && value < 50) {
+    } else if (perValue >= 25 && perValue < 50) {
         return 'progress-bar-low';
-    } else if (value >= 50 && value < 75) {
+    } else if (perValue >= 50 && perValue < 75) {
         return 'progress-bar-high';
     } else {
         return 'progress-bar-very-high';
@@ -60,6 +61,8 @@ class Player extends React.Component {
 
     render() {
         const { details } = this.props;
+        // const healthIndex = Math.ceil(Math.random()*5);
+        const healthIndex = details.currentHealth;
         return (
             <Col md="3">
                 <img
@@ -94,7 +97,7 @@ class Player extends React.Component {
                             </a>
                         </div>
                         <div className="card-description">
-                            <Progress title={'Health'} max={details.maxhealth} color={getProgressBarClassName(details.maxhealth)} animated value={details.currentHealth / details.maxhealth} />
+                            <Progress title={'Health'} max={details.maxhealth} color={getProgressBarClassName(healthIndex, details.maxhealth)} animated value={healthIndex} />
                         </div>
                     </CardBody>
                     <CardFooter>
