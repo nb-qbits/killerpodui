@@ -100,7 +100,7 @@
   font-family: PerfectDark;
   font-size: 20px;
   text-align: center;
-  background: #e14eca;
+  background: #bb0a1e;
 }
 
 .custom-overlay.display{
@@ -122,6 +122,9 @@
 }
 
 
+.non-visible {
+  visibility: hidden;
+}
 
 
 .kill-stat{
@@ -157,10 +160,9 @@
 .shield-sign {
   position: absolute;
   z-index: 1;
-  width: 80px;
-  left: 50%;
+  right: 10px;
   height: 80px;
-  transform: translate(-50%, -50%);
+  bottom: 60px;
 }
 
 .status-sign-waiting {

@@ -7,12 +7,15 @@ import Countdown from 'react-countdown-now';
 
 import Player from './player';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 const _ = require('lodash');
 
 function LiveScore() {
     const [playersData, setPlayersData] = useState({});
+    const isGameOver = useRef(false);
+
+    const timerToClearSomewhere = useRef(false)
 
     // const baseUrl = 'https://api.te2019.aws.redhat-demo.com:6443/apis/rhte.demojam.battlefield/v1alpha1/namespaces/visual/battlefields/'
     // const baseUrl = 'https://5d916e4c741bd4001411625c.mockapi.io/players/1';
@@ -23,11 +26,21 @@ function LiveScore() {
         fetch(baseUrl, {
             method: 'GET',
             headers: new Headers({
-                'Authorization': 'Bearer uqzb_3-3q7kVkzCKEPqMS-ZJCScryNRCxLt27HVA_ZA'
+                'Authorization': 'Bearer mbLDcSbkR0uQE0Ic6QZkkVtnuuHiAgilV9SXATr6yGw'
             })
         }).then(async (fetchedData) => {
             const dataAsJson = await fetchedData.json();
             var merged = _.merge(_.keyBy(dataAsJson['spec']['players'], 'name'), _.keyBy(dataAsJson['status']['scores'], 'name'));
+            if (dataAsJson['status']['phase'] === 'done') {
+                isGameOver.current = true;
+            }
+            if (
+                !_.isEmpty(playersData) &&
+                JSON.stringify(dataAsJson['status']) !== JSON.stringify(playersData['rawData']['status']) &&
+                JSON.stringify(dataAsJson['spec']) !== JSON.stringify(playersData['rawData']['spec'])
+            ) {
+                document.getElementById('soundBar').play();
+            }
             setPlayersData({'rawData': dataAsJson, 'data': _.values(merged)});
         });
     }
@@ -49,9 +62,12 @@ function LiveScore() {
 
     useEffect(() => {
         getData();
-        const pollForData = setInterval(() => getData(), 1500);
+        timerToClearSomewhere.current = setInterval(() => getData(), 5000);
+        if (isGameOver.current) {
+            clearTimeout(timerToClearSomewhere.current);
+        }
         return () => {
-            clearTimeout(pollForData);
+            clearTimeout(timerToClearSomewhere.current);
         };
     }, []);
 
@@ -69,8 +85,21 @@ function LiveScore() {
                     </p>
                 }
             </div>
+            <DrumPad
+                //   name={key} 
+                  soundFile="https://s3.amazonaws.com/freecodecamp/simonSound4.mp3"
+                //   key={key}
+                />
         </div>
     );
 }
+
+function DrumPad(props) {
+    return (
+      <div className="drum-pad">
+        <audio className="clip" id='soundBar' src={props.soundFile} type="audio/mp3" ></audio>
+      </div>
+    )
+  }
 
 export default LiveScore;

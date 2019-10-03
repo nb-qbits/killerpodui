@@ -21,7 +21,6 @@ import React from "react";
 import {
     Button,
     Card,
-    Row,
     CardBody,
     CardFooter,
     CardText,
@@ -54,6 +53,11 @@ const getProgressBarClassName = (value) => {
 }
 
 class Player extends React.Component {
+
+    componentDidUpdate(props) {
+        console.log(props);
+    }
+
     render() {
         const { details } = this.props;
         return (
@@ -90,15 +94,13 @@ class Player extends React.Component {
                             </a>
                         </div>
                         <div className="card-description">
-                            <Progress title={'Health'} max="100" color={getProgressBarClassName(details.maxhealth)} animated value={details.currentHealth / details.maxhealth} />
+                            <Progress title={'Health'} max={details.maxhealth} color={getProgressBarClassName(details.maxhealth)} animated value={details.currentHealth / details.maxhealth} />
                         </div>
                     </CardBody>
                     <CardFooter>
-                        {details.disqualified && <div>
-                            <div className="disqualified-text">
-                                <p>Disqualified</p>
-                            </div>
-                        </div>}
+                        <div className={details.disqualified ? 'disqualified-text' : 'non-visible'}>
+                            <p>Disqualified</p>
+                        </div>
                         <div className="button-container">
                             <Button className="btn-icon btn-round">
                                 <img
