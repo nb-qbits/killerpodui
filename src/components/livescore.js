@@ -17,6 +17,8 @@ function LiveScore() {
 
     const timerToClearSomewhere = useRef(false)
 
+    const audioPlayer = useRef(false)
+
     // const baseUrl = 'https://api.te2019.aws.redhat-demo.com:6443/apis/rhte.demojam.battlefield/v1alpha1/namespaces/visual/battlefields/'
     // const baseUrl = 'https://5d916e4c741bd4001411625c.mockapi.io/players/1';
     const baseUrl = 'https://api.te2019.aws.redhat-demo.com:6443/apis/rhte.demojam.battlefield/v1alpha1/namespaces/visual/battlefields/demofield';
@@ -81,7 +83,31 @@ function LiveScore() {
                     JSON.stringify(dataAsJson['spec']) !== JSON.stringify(playersData['rawData']['spec'])
                 ) {
                     console.log('dsads')
-                    document.getElementById('soundBar').play();
+                    try{
+                        if (audioPlayer.current) {
+                            console.log(audioPlayer.current)
+                            console.log('THIS IS AUDIO')
+                            // audioPlayer.current.stop();
+                        }
+                        audioPlayer.current = document.getElementById('soundBar').play();
+                        // In browsers that don’t yet support this functionality,
+                        // playPromise won’t be defined.
+                        if (audioPlayer.current !== undefined) {
+                            audioPlayer.current.then(function(data) {
+                                console.log(data);
+                                console.log('THIS IS SUCCESS')
+                            // Automatic playback started!
+                            }).catch(function(error) {
+                                console.log(error)
+                                console.log('THIS IS FAIL')
+                            // Automatic playback failed.
+                            // Show a UI element to let the user manually start playback.
+                            });
+                        }
+                    } catch(e){
+                        console.log(e);
+                    }
+                    // audioPlayer.current = 
                 }
                 setPlayersData({'rawData': dataAsJson, 'data': _.values(merged)});
                 
