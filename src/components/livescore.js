@@ -80,6 +80,7 @@ function LiveScore() {
                     JSON.stringify(dataAsJson['status']) !== JSON.stringify(playersData['rawData']['status']) &&
                     JSON.stringify(dataAsJson['spec']) !== JSON.stringify(playersData['rawData']['spec'])
                 ) {
+                    console.log('dsads')
                     document.getElementById('soundBar').play();
                 }
                 setPlayersData({'rawData': dataAsJson, 'data': _.values(merged)});

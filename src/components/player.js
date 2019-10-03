@@ -56,7 +56,7 @@ const getProgressBarClassName = (value, maxHealth) => {
 class Player extends React.Component {
 
     componentDidUpdate(props) {
-        console.log(props);
+        // console.log(props);
     }
 
     render() {
